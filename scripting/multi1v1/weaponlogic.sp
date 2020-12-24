@@ -111,9 +111,6 @@ public int GetWeaponTeam(const char[] weapon) {
  * Sets all the weapon choices based on the client's cookies.
  */
 public void UpdatePreferencesOnCookies(int client) {
-  for (int i = 0; i < g_numRoundTypes; i++) {
-    g_AllowedRoundTypes[client][i] = GetCookieBool(client, g_AllowedRoundTypeCookies[i]);
-  }
 
   char cookieValue[WEAPON_LENGTH];
   GetClientCookie(client, g_PrimaryWeaponCookie, cookieValue, sizeof(cookieValue));
@@ -134,6 +131,10 @@ public void UpdatePreferencesOnCookies(int client) {
   // By not having one set, we can conclude the client has never selected anything in the guns menu
   if (!StrEqual(cookieValue, "") && g_AutoGunsMenuBehaviorCvar.IntValue == 1) {
     g_GivenGunsMenu[client] = true;
+  }
+  
+  for (int i = 0; i < g_numRoundTypes; i++) {
+    g_AllowedRoundTypes[client][i] = GetCookieBool(client, g_AllowedRoundTypeCookies[i]);
   }
 }
 
